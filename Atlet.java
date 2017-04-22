@@ -14,12 +14,19 @@ public class Atlet {
     private int age;
     private int weight;
     private String nationality;
+    private int snatchScore;
+    private int cleanJerkScore;
+    private int totalScore;
+    private int numberAthlete;
 
     public Atlet(String name,int age,int weight,String nationality) {
         this.name = name;
         this.age = age;
         this.weight = weight;
         this.nationality = nationality;
+        this.snatchScore = 0;
+        this.cleanJerkScore = 0;
+        this.totalScore = 0;
     }
 
     public int getAge() {
@@ -36,5 +43,28 @@ public class Atlet {
 
     public int getWeight() {
         return weight;
+    }
+    
+    public int doSnatch(int score){
+        if(score > this.snatchScore){
+            this.snatchScore = score;
+        }
+        return this.snatchScore;
+    }
+    public int doCleanJerk(int score){
+        if(score > this.cleanJerkScore){
+           this.cleanJerkScore = score;
+        }
+        return this.cleanJerkScore;
+    }
+    public int getTotalScore(){
+        this.totalScore = this.snatchScore + this.cleanJerkScore;
+        return this.totalScore;
+    }
+    public void addNumberAthlete(int num){
+        this.numberAthlete = num;
+    }
+    public int getAthleteNumber(){
+        return this.numberAthlete;
     }
 }
