@@ -10,39 +10,105 @@
  */
 public class CompetitionControl {
 
-    //private DistributionBox box
-    private boolean stage;
-    private int[][] weight;
+    private Atlet[] athlete;
+    private String tournamentClass;
+    private int[] snatch;
+    private int[] cleanAndJerk;
+    private int altetKeBerapa;
+    //private Clock clock;
+    //private AthleteControl ac;
+    //private DesicionControl dc;
 
-    public CompetitionControl() {
-        this.weight = new int[3][3];
-        // diisi distributionBox
+    public CompetitionControl(String tournamentClass, int jumlahAtlet) {
+        this.athlete = new Atlet[jumlahAtlet];
+        this.tournamentClass = tournamentClass;
+        this.snatch = new int[3];
+        this.cleanAndJerk = new int[3];
+        // clock,atlet control, desicion control inisialisasi di sini
     }
 
-    public void connectToOperatorAdmin() {
-        // connect ke admin
-    }
-
-    public void setWeight(int w1, int w2, int w3) {
-        if (stage == false) {
-            weight[0][0] = w1;
-            weight[0][1] = w2;
-            weight[0][2] = w3;
-            stage = true;
+    public void setWeight(int w1, int w2, int w3, String methode,int atletKeBerapa) {
+        startTime();
+        if (methode.equalsIgnoreCase("cleanAndJerk")) {
+            this.cleanAndJerk[0] = w1;
+            this.cleanAndJerk[1] = w2;
+            this.cleanAndJerk[2] = w3;
         } else {
-            weight[1][0] = w1;
-            weight[1][1] = w2;
-            weight[1][2] = w3;
-            stage = false;
+            this.snatch[0] = w1;
+            this.snatch[1] = w2;
+            this.snatch[2] = w3;
+        }
+        stopTime();
+        calculatePoint(atletKeBerapa);
+    }
+    private void startTime(){
+        
+    }
+    private void stopTime(){
+        
+    }
+    private void calculatePoint(int atletKeBerapa){
+        int score = 0;
+        //perhitungan score di sini
+        this.athlete[atletKeBerapa].plusScore(score);
+    }
+    public void match(int num){
+        
+    }
+    private void sortAtlet() {
+        int scorelength = athlete.length;
+        quicksort(0, scorelength - 1);
+    }
+
+    private void quicksort(int low, int high) {
+        int i = low, j = high;
+        int pivot = athlete[low + (high - low) / 2].getScore();
+        while (i <= j) {
+            while (athlete[i].getScore() < pivot) {
+                i++;
+            }
+            while (athlete[j].getScore() > pivot) {
+                j--;
+            }
+            if (i <= j) {
+                swap(i, j);
+                i++;
+                j--;
+            }
+        }
+        if (low < j) {
+            quicksort(low, j);
+        }
+        if (i < high) {
+            quicksort(i, high);
         }
     }
-//        public boolean verifyJuriDecision(){
-//            return juri.getDecision();
-//        }
-//        public boolean verifyRefereeDecision(){
-//            return referee.getDecision();
-//        }
-    public void stopMatch(){
-        // stop match
+
+    private void swap(int i, int j) {
+        int temp = athlete[i].getScore();
+        athlete[i].getScore() = athlete[j].getScore();
+        athlete[j].getScore() = temp;
+    }
+    public void getTop5(){
+        String[] hasil = new String[5];
+        for(int i = 0; i<5 ;i++){
+//           hasil[i] = athlete.name....
+        }
+        for(int i = 0;i<5;i++){
+            System.out.println(hasil[i]);
+        }
+    }
+    
+    public void getTop3(){
+        String[] hasil = new String[3];
+        for(int i = 0; i<3 ;i++){
+//           hasil[i] = athlete.name....
+        }
+        for(int i = 0;i<3;i++){
+            System.out.println(hasil[i]);
+        }
+    }
+    public Atlet[] giveAtletOrder(){
+        return this.athlete;
     }
 }
