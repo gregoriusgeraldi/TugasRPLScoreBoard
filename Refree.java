@@ -18,15 +18,20 @@ public class Refree implements Keypad{
         refree = new boolean[count];
     }
     
-    //masih salah gatau fungsinya
+// masih salah kayanya ga paham
      public boolean isRefreeGiveDecision(){
-         if (greenButton()) {
-             return true;
-         }
-         else if(redButton()){
-             return false;
-         }
-         return false;
+        Boolean[] check = new Boolean[refreeCount];
+        for (int i = 0; i < 10; i++) {
+            check[i] = refree[i];
+        }
+        for (int i = 0; i < refree.length; i++) {
+            if (check[i] == null) {
+                return false;
+            }else{
+                return true;
+            }
+        }
+        return true;
     }
     
     public boolean getCompDecFromRefree(){

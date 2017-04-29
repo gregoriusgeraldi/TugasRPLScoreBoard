@@ -19,14 +19,20 @@ public class Jury implements Keypad {
         jury = new boolean[count];
     }
 
-    //masih salah ga tau fungsinya
+// masih salah kayanya ga paham
     public boolean isJuryGiveDecision() {
-        if (greenButton()) {
-            return true;
-        } else if (redButton()) {
-            return false;
+       Boolean[] check = new Boolean[juryCount];
+        for (int i = 0; i < 10; i++) {
+            check[i] = jury[i];
         }
-        return false;
+        for (int i = 0; i < jury.length; i++) {
+            if (check[i] == null) {
+                return false;
+            }else{
+                return true;
+            }
+        }
+        return true;
     }
 
     public boolean getCompDecFromJury() {
