@@ -3,66 +3,59 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tombol;
+package Model;
 
 /**
  *
- * @author Lenovo Iyoss
+ * @author Itsuka Kotori
  */
 public class Jury implements Keypad {
 
-    boolean[] jury;
-    int juryCount;
+    private Boolean[] jury;
+    private int juryCount;
 
     public Jury(int count) {
         this.juryCount = count;
-        jury = new boolean[count];
+        jury = new Boolean[count];
     }
 
 // masih salah kayanya ga paham
-    public boolean isJuryGiveDecision() {
-       Boolean[] check = new Boolean[juryCount];
-        for (int i = 0; i < 10; i++) {
-            check[i] = jury[i];
-        }
+    public Boolean isJuryGiveDecision() {
+       Boolean hasil = true;
         for (int i = 0; i < jury.length; i++) {
-            if (check[i] == null) {
+            if (jury[i] == null) {
                 return false;
-            }else{
-                return true;
             }
         }
-        return true;
+        return hasil;
     }
 
-    public boolean getCompDecFromJury() {
-        int temp = 0;
-        int persen = 100;
-        int a = 100 / jury.length;
-
-        for (int i = 0; i < jury.length; i++) {
-            if (jury[i] == true) {
-                temp++;
-            }
+    public void changeDecision(int index){
+        if(jury[index]==false){
+            jury[index]= true;
         }
-        int b = jury.length - temp;
-        int c = a * b;
-        int res = 100 - c;
-
-        if (res >= 50) {
-            return true;
-        } else {
+        else{
+            jury[index]=false;
+        }
+    }
+    
+    public boolean getCompDecFromJury() {
+        if(isJuryGiveDecision()){
+            int count = 0;
+            for(int i = 0;i<jury.length;i++){
+                if(jury[i]==true){
+                    count++;
+                }
+            }
+            double countInDouble = juryCount*1.0;
+            double checkInDouble = count*1.0;
+            if(checkInDouble>(countInDouble/2))
+                return true;
+            else
+                return false;
+        }
+        else{
             return false;
         }
-    }
-
-    @Override
-    public boolean greenButton() {
-        return true;
-    }
-
-    @Override
-    public boolean redButton() {
-        return false;
     }
 }

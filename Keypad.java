@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tombol;
+package Model;
 
 /**
  *
- * @author Lenovo Iyoss
+ * @author Itsuka Kotori
  */
 public interface Keypad {
-    boolean greenButton();
-    boolean redButton();
+    Boolean greenButton = true;
+    Boolean redButton =  false;
 }
