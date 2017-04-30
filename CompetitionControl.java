@@ -15,15 +15,23 @@ public class CompetitionControl {
     private int[] snatch;
     private int[] cleanAndJerk;
     private int altetKeBerapa;
+    private Thread t;
     //private Clock clock;
-    //private AthleteControl ac;
-    //private DesicionControl dc;
+    private AthleteController ac;
+    private DecisionController dc;
+    private Referee ref;
+    private Jury jury;
 
-    public CompetitionControl(String tournamentClass, int jumlahAtlet) {
+    public CompetitionControl(String tournamentClass, int jumlahAtlet, Referee ref, Jury jury) {
         this.athlete = new Atlet[jumlahAtlet];
         this.tournamentClass = tournamentClass;
         this.snatch = new int[3];
         this.cleanAndJerk = new int[3];
+        this.t = new Thread(new Clock());
+        this.ac = new AthleteController();
+        this.ref = ref;
+        this.jury = jury;
+        this.dc = new DecisionController(this.jury, this.ref);
         // clock,atlet control, desicion control inisialisasi di sini
     }
 
@@ -42,10 +50,10 @@ public class CompetitionControl {
         calculatePoint(atletKeBerapa);
     }
     private void startTime(){
-        
+        t.start();
     }
     private void stopTime(){
-        
+        t.stop();
     }
     private void calculatePoint(int atletKeBerapa){
         int score = 0;
@@ -53,7 +61,36 @@ public class CompetitionControl {
         this.athlete[atletKeBerapa].plusScore(score);
     }
     public void match(int num){
-        
+        boolean[] snatchAttempt = athlete[num].getSnatchAttempt();
+        boolean[] cjAttempt = athlete[num].getCJAttempt();
+        int i = 0;
+        while(snatchAttempt[i] == true){
+            i++;
+        }
+        if (i == 3){
+            int j = 0;
+            while(cjAttempt[j] == true){
+                j ++;
+            }
+            if(j < 3){
+                //Kyknya perlu dikontrol di interfacenya
+                this.startTime();
+                int cjWeight = cleanAndJerk[j];
+                this.stopTime();
+                if(dc.getDecision()){
+                    athlete[num].doCJ(cjWeight);
+                }
+            }
+        }
+        else{
+            //Kyknya perlu dikontrol di interfacenya
+            this.startTime();
+            int snatchWeight = snatch[i];
+            this.stopTime();
+            if(dc.getDecision()){
+                athlete[num].doSnatch(snatchWeight);
+            }
+        }
     }
     private void sortAtlet() {
         int scorelength = athlete.length;
@@ -86,13 +123,13 @@ public class CompetitionControl {
 
     private void swap(int i, int j) {
         int temp = athlete[i].getScore();
-        athlete[i].getScore() = athlete[j].getScore();
-        athlete[j].getScore() = temp;
+        athlete[i].setScore(athlete[j].getScore());
+        athlete[j].setScore(temp);
     }
     public void getTop5(){
         String[] hasil = new String[5];
         for(int i = 0; i<5 ;i++){
-//           hasil[i] = athlete.name....
+           hasil[i] = athlete[i].getName();
         }
         for(int i = 0;i<5;i++){
             System.out.println(hasil[i]);
@@ -102,7 +139,7 @@ public class CompetitionControl {
     public void getTop3(){
         String[] hasil = new String[3];
         for(int i = 0; i<3 ;i++){
-//           hasil[i] = athlete.name....
+           hasil[i] = athlete[i].getName();
         }
         for(int i = 0;i<3;i++){
             System.out.println(hasil[i]);
