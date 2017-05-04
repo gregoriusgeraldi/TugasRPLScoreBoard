@@ -60,6 +60,7 @@ public class RplTabel extends Application {
         snatchCol.getColumns().addAll(oneCol, twoCol, threeCol, resCol);
         cleanCol.getColumns().addAll(oneCol, twoCol, threeCol, resCol);
         
+        //belum dimasukin datanya, bisi ada perubahan.
         
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
